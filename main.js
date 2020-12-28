@@ -71,12 +71,12 @@ usercredentials.forEach(async credentials => {
             }
             const slot = response.data.slots.find(slot => slot.startTime === desiredTime);
             if (!slot) {
-                logger.WARN(`slot exists for ${desiredTime}`);
+                logger.WARN(`no slot exists for ${desiredTime}`);
                 continue;
             }
             if (slot.remainingSpots == 0) {
-                logger.ERROR('Not enough slots to make reservation');
-                return;
+                logger.WARN(`0 slots remaining on day: ${i} at: ${desiredTime}`);
+                continue;
             }
             if (slot) {
                 const { eventInstanceId } = slot;
