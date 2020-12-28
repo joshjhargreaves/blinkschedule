@@ -36,9 +36,11 @@ You make modifications to your cron jobs like so:
 
 `crontab -e`
 
-Adding the following line will execute the script every day at midnight:
-
-`0 0 * * *  cd ~/DIR_WHERE_YOU_CLONE/blinkschedule && yarn run reserve`
+Adding the following line will execute the script every day at 3am.
+```
+PATH=/bin:/usr/local/bin
+0 3 * * *  cd ~/DIR_WHERE_YOU_CLONE/blinkschedule && yarn run reserve
+```
 
 ## Output
 You will see output from the script in the console as well as within `default.log`.
