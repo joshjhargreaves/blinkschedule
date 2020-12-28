@@ -83,11 +83,11 @@ usercredentials.forEach(async credentials => {
                 try {
                     response = await axios.post(`/reservations/register`, { eventInstanceId }, options)
                 } catch(e) {
-                    logger.WARN(`Could not reserve ${desiredTime}`);
+                    logger.WARN(`Could not reserve on day: ${i} at: ${desiredTime}`);
                     return;
                 }
 
-                logger.INFO(`Successfully reserved ${desiredTime}`);
+                logger.INFO(`Successfully reserved on day: ${i} at: ${desiredTime}`);
             }
         }
     }
