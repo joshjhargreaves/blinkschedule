@@ -55,8 +55,8 @@ usercredentials.forEach(async credentials => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     
-    // Blink only lets us book 2 days in advance
-    for (let i=0; i<3; ++i) {
+    // Blink only lets us book 36 hours in advance
+    for (let i=0; i<4; ++i) {
         date.setDate(currentDate.getDate() + i);
         
         const desiredTime = credentials.reservations[date.getDay().toString()];
