@@ -52,11 +52,10 @@ usercredentials.forEach(async credentials => {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
     
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    
-    // Blink only lets us book 36 hours in advance
-    for (let i=0; i<4; ++i) {
+    // Blink only lets us book 3 days in advance
+    for (let i=0; i<=3; ++i) {
+        const date = new Date();
+        date.setHours(0, 0, 0, 0);
         date.setDate(currentDate.getDate() + i);
         
         const desiredTime = credentials.reservations[date.getDay().toString()];
@@ -71,11 +70,11 @@ usercredentials.forEach(async credentials => {
             }
             const slot = response.data.slots.find(slot => slot.startTime === desiredTime);
             if (!slot) {
-                logger.WARN(`no slot exists for ${desiredTime}`);
+                logger.WARN(`no slots found on day: ${date.getDay()} at: ${desiredTime}`);
                 continue;
             }
             if (slot.remainingSpots == 0) {
-                logger.WARN(`0 slots remaining on day: ${i} at: ${desiredTime}`);
+                logger.WARN(`0 slots remaining on day: ${date.getDay()} at: ${desiredTime}`);
                 continue;
             }
             if (slot) {
@@ -83,11 +82,11 @@ usercredentials.forEach(async credentials => {
                 try {
                     response = await axios.post(`/reservations/register`, { eventInstanceId }, options)
                 } catch(e) {
-                    logger.WARN(`Could not reserve on day: ${i} at: ${desiredTime}`);
+                    logger.WARN(`Could not reserve on day: ${date.getDay()} at: ${desiredTime}`);
                     return;
                 }
 
-                logger.INFO(`Successfully reserved on day: ${i} at: ${desiredTime}`);
+                logger.INFO(`Successfully reserved on day: ${date.getDay()} at: ${desiredTime}`);
             }
         }
     }
